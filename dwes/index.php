@@ -18,3 +18,17 @@ for ($i = 0; $i < count($calles); $i++) {
 
 print_r($calles);
 ?>
+
+
+
+
+<?php 
+$name = 'Peri';
+$edad = 17;
+
+if($edad >= 18){
+    echo strtoupper($name);
+}else{
+    echo 'Eres menor '. strrev($name);
+}
+?>

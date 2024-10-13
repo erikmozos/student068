@@ -22,15 +22,15 @@ echo "Check-out: $check_out <br>";
 echo "Numero de personas: $personas";
 
 
-$servername = "localhost";
-$username = "root";
-$password = "";
+// $servername = "localhost";
+// $username = "root";
+// $password = "";
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, 'hotel');
+// // Create connection
+// $conn = new mysqli($servername, $username, $password, 'hotel');
 
-// Check connection
-if ($conn->connect_error) {
-  die("Connection failed: " . $conn->connect_error);
-}
-?>
+// // Check connection
+// if ($conn->connect_error) {
+//   die("Connection failed: " . $conn->connect_error);
+// }
+// ?>

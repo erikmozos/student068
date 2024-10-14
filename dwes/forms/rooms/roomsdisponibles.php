@@ -1,31 +1,56 @@
 <?php
-
+// Configuración de conexión a la base de datos
 $servername = "localhost";
 $username = "root";
 $password = "";
-// Create connection
+
+// Crear conexión
 $conn = new mysqli($servername, $username, $password, 'hotel');
 
-// Check connection
+// Verificar conexión
 if ($conn->connect_error) {
-  die("Connection failed: " . $conn->connect_error);
+    die("La conexión ha fallado: " . $conn->connect_error);
 }
 
-//Query
-$sql = "select * from rooms where room_state = 'disponible'";
+// Consulta para obtener habitaciones disponibles
+$sql = "SELECT room_number, room_price, description, room_state FROM rooms WHERE room_state = 'disponible'";
 $result = mysqli_query($conn, $sql);
 
-include ($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/includes/header.php');
-
-while ($row = mysqli_fetch_assoc($result)) {
-  echo "Room Name: " . $row['room_number'] . "<br>";
-  echo "Room Price: " . $row['room_price'] . "<br>";
-  echo "----------------------" . "<br>";
-}
-
- mysqli_close($conn);
+// Incluir el encabezado de la página
+include($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/includes/header.php');
 ?>
 
+<!-- Contenedor principal centrado -->
+<div class="container mx-auto my-16 px-6">
+    <h2 class="text-4xl font-playfair font-semibold text-center mb-10 text-blue-900">Habitaciones Disponibles</h2>
+    
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+
+        <?php
+        // Mostrar resultados si hay habitaciones disponibles
+        if (mysqli_num_rows($result) > 0) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                echo "
+                <div class='bg-white p-6 rounded-lg shadow-lg text-center'>
+                    <h3 class='text-2xl font-semibold text-blue-800 mb-4'>Habitación: " . $row['room_number'] . "</h3>
+                    <p class='text-lg text-gray-700 mb-2'><strong>Precio:</strong> $" . $row['room_price'] . "</p>
+                    <p class='text-gray-600 mb-4'><strong>Descripción:</strong> " . $row['description'] . "</p>
+                    <p class='text-green-600 font-bold'><strong>Estado:</strong> Disponible</p>
+                </div>
+                ";
+            }
+        } else {
+            echo "<p class='text-center text-xl text-gray-700'>No hay habitaciones disponibles en este momento.</p>";
+        }
+        ?>
+
+    </div>
+</div>
+
 <?php
-include ($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/includes/footer.php');
+// Cerrar la conexión
+mysqli_close($conn);
+
+// Incluir el pie de página
+include($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/includes/footer.php');
 ?>

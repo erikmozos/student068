@@ -17,6 +17,7 @@
                 <a href="/student068/dwes/paginas/servicios.php" class="hover:text-gold-300 text-lg font-semibold transition-colors">Servicios</a>
                 <a href="/student068/dwes/paginas/reservas.php" class="hover:text-gold-300 text-lg font-semibold transition-colors">Reservas</a>
                 <a href="/student068/dwes/paginas/contact.php" class="hover:text-gold-300 text-lg font-semibold transition-colors">Contacto</a>
+                <a href="/student068/dwes/forms/admin.php" class="hover:text-gold-300 text-lg font-semibold transition-colors">Admin</a>
             </nav>
         </div>
     </header>

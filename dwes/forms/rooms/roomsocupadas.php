@@ -21,7 +21,7 @@ include($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/includes/header.php');
 ?>
 
 <!-- Contenedor principal centrado -->
-<div class="container mx-auto my-16 px-6">
+<div class="container mx-auto my-16 px-6 min-h-screen">
     <h2 class="text-4xl font-playfair font-semibold text-center mb-10 text-blue-900">Habitaciones Ocupadas</h2>
     
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">

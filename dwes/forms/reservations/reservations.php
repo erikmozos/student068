@@ -45,7 +45,7 @@ include ($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/includes/header.php');
         <button type="submit" class="w-full bg-purple-500 text-white p-3 rounded-lg hover:bg-purple-600 transition-colors">Insertar Nueva Reserva</button>
     </form>
 
-    <form action="<?php echo '/student068/dwes/forms/rooms/roomsdelete.php'; ?>">
+    <form action="<?php echo '/student068/dwes/forms/reservations/eliminarReservation.php'; ?>">
     <button type="submit" class="w-full bg-gray-600 text-white p-3 rounded-lg hover:bg-gray-700 transition-colors">Eliminar Reserva</button>
     </form>
 </section>

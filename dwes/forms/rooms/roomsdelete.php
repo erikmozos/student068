@@ -14,7 +14,7 @@ if ($conn->connect_error) {
 // Eliminar habitación
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_room'])) {
     $room_number = $_POST['room_number'];
-    $sql_delete_room = "DELETE FROM rooms WHERE room_number = '$room_number'";
+    $sql_delete_room = "DELETE FROM 068_rooms WHERE room_number = '$room_number'";
     if (mysqli_query($conn, $sql_delete_room)) {
         echo "<p class='text-center text-green-600'>Habitación eliminada correctamente.</p>";
     } else {
@@ -26,9 +26,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_room'])) {
 $search = "";
 if (isset($_GET['search'])) {
     $search = $_GET['search'];
-    $sql = "SELECT room_id, room_number, room_floor, room_state, description, room_price FROM rooms WHERE room_number LIKE '%$search%'";
+    $sql = "SELECT room_id, room_number, room_floor, room_state, description, room_price FROM 068_rooms WHERE room_number LIKE '%$search%'";
 } else {
-    $sql = "SELECT room_id, room_number, room_floor, room_state, description, room_price FROM rooms";
+    $sql = "SELECT room_id, room_number, room_floor, room_state, description, room_price FROM 068_rooms";
 }
 $result = mysqli_query($conn, $sql);
 

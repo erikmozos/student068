@@ -13,7 +13,7 @@ if ($conn->connect_error) {
 }
 
 // Consulta para obtener habitaciones ocupadas
-$sql = "SELECT room_number, room_price, description, room_state FROM rooms WHERE room_state = 'ocupada'";
+$sql = "SELECT room_number, room_price, description, room_state FROM 068_rooms WHERE room_state = 'ocupada'";
 $result = mysqli_query($conn, $sql);
 
 // Incluir el encabezado de la página

@@ -19,23 +19,42 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['insert_room'])) {
     $room_price = $_POST['room_price'];
     $description = $_POST['description'];
     $room_state = $_POST['room_state'];
+    $room_floor = $_POST['room_floor'];  // Nuevo campo para el piso
+    $room_type_id = $_POST['room_type_id'];
 
-    $sql = "INSERT INTO rooms (room_number, room_price, description, room_state) VALUES ('$room_number', '$room_price', '$description', '$room_state')";
-
-    if (mysqli_query($conn, $sql)) {
-        echo "<p class='text-center text-green-600'>Nueva habitación insertada correctamente.</p>";
+    // Validación: Verificar si el número de habitación ya existe
+    $check_sql = "SELECT * FROM 068_rooms WHERE room_number = '$room_number'";
+    $result = mysqli_query($conn, $check_sql);
+    
+    if (mysqli_num_rows($result) > 0) {
+        echo "<p class='text-center text-red-600'>El número de habitación ya existe.</p>";
     } else {
-        echo "<p class='text-center text-red-600'>Error al insertar la habitación: " . mysqli_error($conn) . "</p>";
+        // Insertar nueva habitación con room_floor
+        $sql = "INSERT INTO 068_rooms (room_number, room_price, description, room_state, room_floor, room_type_id) 
+                VALUES ('$room_number', '$room_price', '$description', '$room_state', '$room_floor', '$room_type_id')";
+
+        if (mysqli_query($conn, $sql)) {
+            echo "<p class='text-center text-green-600'>Nueva habitación insertada correctamente.</p>";
+        } else {
+            echo "<p class='text-center text-red-600'>Error al insertar la habitación: " . mysqli_error($conn) . "</p>";
+        }
     }
 }
 ?>
 
 <?php
+// Obtener los tipos de habitación para el dropdown
+$type_sql = "SELECT room_type_id, type_name FROM 068_room_types";
+$type_result = mysqli_query($conn, $type_sql);
+?>
+
+<?php
+// Incluir el header
 include ($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/includes/header.php');
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -55,6 +74,10 @@ include ($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/includes/header.php');
             <input type="number" id="room_price" name="room_price" required class="w-full p-3 border border-blue-400 rounded-lg focus:outline-none focus:border-yellow-500">
         </div>
         <div>
+            <label for="room_floor" class="block text-lg text-blue-800">Piso</label> <!-- Nuevo campo para el piso -->
+            <input type="number" id="room_floor" name="room_floor" required class="w-full p-3 border border-blue-400 rounded-lg focus:outline-none focus:border-yellow-500">
+        </div>
+        <div>
             <label for="description" class="block text-lg text-blue-800">Descripción</label>
             <textarea id="description" name="description" required class="w-full p-3 border border-blue-400 rounded-lg focus:outline-none focus:border-yellow-500"></textarea>
         </div>
@@ -63,18 +86,33 @@ include ($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/includes/header.php');
             <select id="room_state" name="room_state" required class="w-full p-3 border border-blue-400 rounded-lg focus:outline-none focus:border-yellow-500">
                 <option value="disponible">Disponible</option>
                 <option value="ocupada">Ocupada</option>
+                <option value="mantenimiento">En Mantenimiento</option>
+            </select>
+        </div>
+        <div>
+            <label for="room_type_id" class="block text-lg text-blue-800">Tipo de Habitación</label>
+            <select id="room_type_id" name="room_type_id" required class="w-full p-3 border border-blue-400 rounded-lg focus:outline-none focus:border-yellow-500">
+                <option value="">Seleccione un tipo</option>
+                <?php
+                if (mysqli_num_rows($type_result) > 0) {
+                    while($row = mysqli_fetch_assoc($type_result)) {
+                        echo "<option value='" . $row['room_type_id'] . "'>" . $row['type_name'] . "</option>";
+                    }
+                }
+                ?>
             </select>
         </div>
         <button type="submit" name="insert_room" class="w-full bg-yellow-500 text-white p-3 rounded-lg hover:bg-yellow-600 transition-colors">Insertar Habitación</button>
     </form>
 </section>
 
-</body>
-</html>
-
 <?php
+// Incluir el footer
 include ($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/includes/footer.php');
 ?>
+
+</body>
+</html>
 
 <?php
 // Cerrar la conexión

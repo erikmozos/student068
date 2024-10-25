@@ -14,7 +14,7 @@ include($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/includes/header.php');
     <button type="submit" class="w-full bg-blue-400 text-white p-3 rounded-lg hover:bg-blue-700 transition-colors">Gestionar Reservas</button>
     </form>
     <form action="<?php echo '/student068/dwes/forms/customers/customers.php'; ?>">
-    <button type="submit" class="w-full bg-green-400 text-white p-3 rounded-lg hover:bg-green-700 transition-colors w-1">Gestionar Clientes</button>
+    <button type="submit" class="w-full bg-green-400 text-white p-3 rounded-lg hover:bg-green-700 transition-colors ">Gestionar Clientes</button>
     </form>
 
 

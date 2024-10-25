@@ -14,7 +14,7 @@ if ($conn->connect_error) {
 }
 
 // Consulta para obtener todas las habitaciones
-$sql = "SELECT room_number, room_price, description, room_state FROM rooms";
+$sql = "SELECT room_number, room_price, description, room_state FROM 068_rooms";
 $result = mysqli_query($conn, $sql);
 
 // Incluir el encabezado de la página

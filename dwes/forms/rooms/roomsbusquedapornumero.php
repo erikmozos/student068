@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $room_number = $_POST['room_number'];
 
     // Consulta para obtener la información de la habitación
-    $sql = "SELECT * FROM rooms WHERE room_number = '$room_number'";
+    $sql = "SELECT * FROM 068_rooms WHERE room_number = '$room_number'";
     $result = mysqli_query($conn, $sql);
 
     if (mysqli_num_rows($result) > 0) {

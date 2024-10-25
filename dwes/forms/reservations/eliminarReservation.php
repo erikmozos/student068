@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_reservation']))
     $reservation_id = $_POST['reservation_id'];
 
     // Consulta para eliminar la reserva
-    $sql_delete_reservation = "DELETE FROM reservations WHERE reservation_id = '$reservation_id'";
+    $sql_delete_reservation = "DELETE FROM 068_reservations WHERE reservation_id = '$reservation_id'";
     if (mysqli_query($conn, $sql_delete_reservation)) {
         echo "<p class='text-center text-green-600'>Reserva eliminada correctamente.</p>";
     } else {
@@ -31,9 +31,9 @@ $search = "";
 if (isset($_GET['search'])) {
     $search = $_GET['search'];
     // Cambiar el campo de búsqueda a reservation_number
-    $sql = "SELECT reservation_id, date_in, date_out, number_of_customers, reservation_number, reservation_price FROM reservations WHERE reservation_number LIKE '%" . $conn->real_escape_string($search) . "%'";
+    $sql = "SELECT reservation_id, date_in, date_out, number_of_customers, reservation_number, reservation_price FROM 068_reservations WHERE reservation_number LIKE '%" . $conn->real_escape_string($search) . "%'";
 } else {
-    $sql = "SELECT reservation_id, date_in, date_out, number_of_customers, reservation_number, reservation_price FROM reservations";
+    $sql = "SELECT reservation_id, date_in, date_out, number_of_customers, reservation_number, reservation_price FROM 068_reservations";
 }
 $result = mysqli_query($conn, $sql);
 

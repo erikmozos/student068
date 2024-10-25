@@ -1,17 +1,8 @@
 <?php
-// Configuración de conexión a la base de datos
-$servername = "localhost";
-$username = "root";
-$password = "";
-$database = "hotel";
+include ($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/.gitignore/database/remoteconnection.php');
+?>
 
-// Crear conexión
-$conn = new mysqli($servername, $username, $password, $database);
-
-// Verificar conexión
-if ($conn->connect_error) {
-    die("La conexión ha fallado: " . $conn->connect_error);
-}
+<?php
 
 // Insertar nueva reserva
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['insert_reservation'])) {
@@ -22,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['insert_reservation']))
     $reservation_price = $_POST['reservation_price'];
     $extras = $_POST['extras'];
 
-    $sql = "INSERT INTO reservations (reservation_number, date_in, date_out, number_of_customers, reservation_price, extras) 
+    $sql = "INSERT INTO 068_reservations (reservation_number, date_in, date_out, number_of_customers, reservation_price, extras) 
             VALUES ('$reservation_number', '$date_in', '$date_out', '$number_of_customers', '$reservation_price', '$extras')";
 
     if (mysqli_query($conn, $sql)) {

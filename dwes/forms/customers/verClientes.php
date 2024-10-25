@@ -1,13 +1,7 @@
 <?php
-// Configuración de conexión a la base de datos
-$servername = "localhost";
-$username = "root";
-$password = "";
-$database = "hotel";  // Nombre de la base de datos
-
-// Crear conexión
-$conn = new mysqli($servername, $username, $password, $database);
-
+include ($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/.gitignore/database/remoteconnection.php');
+?>
+<?php
 // Verificar conexión
 if ($conn->connect_error) {
     die("La conexión ha fallado: " . $conn->connect_error);
@@ -42,7 +36,7 @@ include($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/includes/header.php');
                 ";
             }
         } else {
-            echo "<p class='text-center text-xl text-gray-700'>No hay reservas registradas en este momento.</p>";
+            echo "<p class='text-center text-xl text-gray-700'>No hay clientes en este momento.</p>";
         }
         ?>
 

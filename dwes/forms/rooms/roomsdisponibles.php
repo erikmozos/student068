@@ -1,16 +1,8 @@
 <?php
-// Configuración de conexión a la base de datos
-$servername = "localhost";
-$username = "root";
-$password = "";
+include ($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/.gitignore/database/remoteconnection.php');
+?>
 
-// Crear conexión
-$conn = new mysqli($servername, $username, $password, 'hotel');
-
-// Verificar conexión
-if ($conn->connect_error) {
-    die("La conexión ha fallado: " . $conn->connect_error);
-}
+<?php
 
 // Consulta para obtener habitaciones disponibles
 $sql = "SELECT room_number, room_price, description, room_state FROM 068_rooms WHERE room_state = 'disponible'";

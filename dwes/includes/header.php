@@ -10,7 +10,7 @@
     <header class="bg-gradient-to-r from-navy-800 via-navy-900 to-navy-700 text-gold-400 p-6 shadow-md">
         <div class="container mx-auto flex flex-col items-center">
             <div class="logo mb-4">
-                <img src="/student068/dwes/img/logohotel.jpg" alt="Mozos Hotels Logo" class="h-16 w-auto">
+                <img src="/student068/dwes/assets/img/logohotel.jpg" alt="Mozos Hotels Logo" class="h-16 w-auto">
             </div>
             <nav class="flex space-x-8">
                 <a href="/student068/dwes/index.php" class="hover:text-gold-300 text-lg font-semibold transition-colors">Inicio</a>

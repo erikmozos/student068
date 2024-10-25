@@ -1,32 +1,23 @@
 <?php
-// Configuración de conexión a la base de datos
-$servername = "localhost";
-$username = "root";
-$password = "";
-$database = "hotel";
+include ($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/.gitignore/database/remoteconnection.php');
+?>
 
-// Crear conexión
-$conn = new mysqli($servername, $username, $password, $database);
-
-// Verificar conexión
-if ($conn->connect_error) {
-    die("La conexión ha fallado: " . $conn->connect_error);
-}
-
-// Insertar nueva reserva
+<?php
+// Insertar nuevo cliente
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['insert_cliente'])) {
-    $reservation_number = $_POST['reservation_number'];
-    $date_in = $_POST['date_in'];
-    $date_out = $_POST['date_out'];
-    $number_of_customers = $_POST['number_of_customers'];
-    $reservation_price = $_POST['reservation_price'];
-    $customer_birthdate = $_POST['customer_birthdate'];
+    $dni_cliente = $_POST['customer_dni'];
+    $nombre_cliente = $_POST['customer_name'];
+    $apellidos_cliente = $_POST['customer_last_name'];
+    $direccion_cliente = $_POST['customer_address'];
+    $telefono_cliente = $_POST['phone_number'];
+    $correo_cliente = $_POST['customer_email']; // Nuevo campo de correo electrónico
+    $fecha_nacimiento_cliente = $_POST['customer_birthdate'];
 
-    $sql = "INSERT INTO reservations (reservation_number, date_in, date_out, number_of_customers, reservation_price, customer_birthdate) 
-            VALUES ('$reservation_number', '$date_in', '$date_out', '$number_of_customers', '$reservation_price', '$customer_birthdate')";
+    $sql = "INSERT INTO 068_customers (customer_name, customer_last_name, customer_dni, customer_address, phone_number, customer_email, customer_birthdate) 
+            VALUES ('$nombre_cliente', '$apellidos_cliente', '$dni_cliente', '$direccion_cliente', '$telefono_cliente', '$correo_cliente', '$fecha_nacimiento_cliente')";
 
     if (mysqli_query($conn, $sql)) {
-        echo "<p class='text-center text-green-600'>Nueva reserva insertada correctamente.</p>";
+        echo "<p class='text-center text-green-600'>Nuevo cliente insertado correctamente.</p>";
     } else {
         echo "<p class='text-center text-red-600'>Error al insertar la reserva: " . mysqli_error($conn) . "</p>";
     }
@@ -42,7 +33,7 @@ include ($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/includes/header.php');
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Insertar Nueva Reserva</title>
+    <title>Insertar Cliente</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
 </head>
 <body>
@@ -71,10 +62,14 @@ include ($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/includes/header.php');
             <input type="number" id="phone_number" name="phone_number" required class="w-full p-3 border border-blue-400 rounded-lg focus:outline-none focus:border-yellow-500">
         </div>
         <div>
+            <label for="customer_email" class="block text-lg text-blue-800">Correo Electrónico</label>
+            <input type="email" id="customer_email" name="customer_email" required class="w-full p-3 border border-blue-400 rounded-lg focus:outline-none focus:border-yellow-500">
+        </div>
+        <div>
             <label for="customer_birthdate" class="block text-lg text-blue-800">Fecha de Nacimiento</label>
             <input type="date" id="customer_birthdate" name="customer_birthdate" required class="w-full p-3 border border-blue-400 rounded-lg focus:outline-none focus:border-yellow-500">
         </div>
-        <button type="submit" name="insert_cliente" class="w-full bg-yellow-500 text-white p-3 rounded-lg hover:bg-yellow-600 transition-colors">Insertar Reserva</button>
+        <button type="submit" name="insert_cliente" class="w-full bg-yellow-500 text-white p-3 rounded-lg hover:bg-yellow-600 transition-colors">Insertar Cliente</button>
     </form>
 </section>
 

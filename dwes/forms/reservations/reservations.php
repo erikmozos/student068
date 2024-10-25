@@ -1,16 +1,7 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-
-// Crear conexión
-$conn = new mysqli($servername, $username, $password, 'hotel');
-
-// Verificar conexión
-if ($conn->connect_error) {
-    die("La conexión ha fallado: " . $conn->connect_error);
-}
+include ($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/.gitignore/database/remoteconnection.php');
 ?>
+
 
 <?php
 include ($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/includes/header.php');

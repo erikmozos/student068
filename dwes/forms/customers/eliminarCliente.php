@@ -1,23 +1,15 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$database = "hotel";  // Nombre de la base de datos
+include ($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/.gitignore/database/remoteconnection.php');
+?>
+<?php
 
-// Crear conexión
-$conn = new mysqli($servername, $username, $password, $database);
-
-// Verificar conexión
-if ($conn->connect_error) {
-    die("La conexión ha fallado: " . $conn->connect_error);
-}
 
 // Eliminar cliente
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_customer'])) {
     $customer_dni = $_POST['customer_dni'];
 
     // Consulta para eliminar el cliente por su DNI
-    $sql_delete_customer = "DELETE FROM customers WHERE customer_dni = '$customer_dni'";
+    $sql_delete_customer = "DELETE FROM 068_customers WHERE customer_dni = '$customer_dni'";
 
     if (mysqli_query($conn, $sql_delete_customer)) {
         echo "<p class='text-center text-green-600'>Cliente eliminado correctamente.</p>";
@@ -28,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_customer'])) {
 
 // Filtrar clientes por DNI
 $filter_dni = isset($_POST['filter_dni']) ? $_POST['filter_dni'] : '';
-$sql = "SELECT customer_dni, customer_name, customer_last_name, customer_address, phone_number, customer_birthdate FROM customers";
+$sql = "SELECT customer_dni, customer_name, customer_last_name, customer_address, phone_number, customer_birthdate FROM 068_customers";
 if (!empty($filter_dni)) {
     $sql .= " WHERE customer_dni LIKE '%" . $conn->real_escape_string($filter_dni) . "%'";
 }

@@ -1,16 +1,8 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$database = "hotel"; // Base de datos
+include ($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/.gitignore/database/remoteconnection.php');
+?>
 
-// Crear conexión
-$conn = new mysqli($servername, $username, $password, $database);
-
-// Verificar conexión
-if ($conn->connect_error) {
-    die("La conexión ha fallado: " . $conn->connect_error);
-}
+<?php
 
 // Inicializar variables
 $customer_name = "";
@@ -26,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $customer_dni = $_POST['customer_dni'];
 
         // Consulta para obtener la información del cliente
-        $sql = "SELECT * FROM customers WHERE customer_dni = '$customer_dni'";
+        $sql = "SELECT * FROM 068_customers WHERE customer_dni = '$customer_dni'";
         $result = mysqli_query($conn, $sql);
 
         if (mysqli_num_rows($result) > 0) {
@@ -50,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $customer_birthdate = $_POST['customer_birthdate'];
 
         // Consulta para actualizar la información del cliente
-        $update_sql = "UPDATE customers SET 
+        $update_sql = "UPDATE 068_customers SET 
                         customer_name='$customer_name', 
                         customer_last_name='$customer_last_name', 
                         customer_dni='$customer_dni', 

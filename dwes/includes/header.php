@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -17,7 +21,18 @@
                 <a href="/student068/dwes/paginas/servicios.php" class="hover:text-gold-300 text-lg font-semibold transition-colors">Servicios</a>
                 <a href="/student068/dwes/paginas/reservas.php" class="hover:text-gold-300 text-lg font-semibold transition-colors">Reservas</a>
                 <a href="/student068/dwes/paginas/contact.php" class="hover:text-gold-300 text-lg font-semibold transition-colors">Contacto</a>
-                <a href="/student068/dwes/forms/admin.php" class="hover:text-gold-300 text-lg font-semibold transition-colors">Admin</a>
+
+                <?php if (isset($_SESSION['username'])): ?>
+                       <?php if ($_SESSION['userrole'] === "employee" || $_SESSION['userrole'] === "admin"): ?>
+                            <a href="/student068/dwes/forms/admin.php" class="hover:text-gold-300 text-lg font-semibold transition-colors">Admin</a>
+                        <?php endif; ?>
+                    <span class="text-lg font-semibold">Hola, <?php echo htmlspecialchars($_SESSION['username']); ?>!</span>
+                    <a href="/student068/dwes/forms/logout.php" class="hover:text-gold-300 text-lg font-semibold transition-colors">Logout</a>
+                <?php else: ?>
+                    <a href="/student068/dwes/forms/login.php" class="hover:text-gold-300 text-lg font-semibold transition-colors">Login</a>
+                <?php endif; ?>
             </nav>
         </div>
     </header>
+</body>
+</html>

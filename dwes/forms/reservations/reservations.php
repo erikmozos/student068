@@ -1,9 +1,4 @@
 <?php
-include ($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/.gitignore/database/remoteconnection.php');
-?>
-
-
-<?php
 include ($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/includes/header.php');
 ?>
 

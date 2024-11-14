@@ -8,8 +8,8 @@
 
 
 
-// Prubeas de code
-<!-- <?php
+<!-- Prubeas de code
+ <?php
 $calles = array("Calle Miguel de Cervantes 12", "calle Aña huh");
 
 for ($i = 0; $i < count($calles); $i++) {

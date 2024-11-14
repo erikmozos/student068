@@ -7,8 +7,14 @@ include ($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/.gitignore/database/remotec
 // Eliminar habitación
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_room'])) {
     $room_number = $_POST['room_number'];
-    $sql_delete_room = "DELETE FROM 068_rooms WHERE room_number = '$room_number'";
-    if (mysqli_query($conn, $sql_delete_room)) {
+    
+    // Disable foreign key checks, delete, and re-enable foreign key checks if needed
+    $sql_disable_fk = "SET FOREIGN_KEY_CHECKS=0;";
+    $sql_delete_room = "DELETE FROM 068_rooms WHERE room_number = '$room_number';";
+    $sql_enable_fk = "SET FOREIGN_KEY_CHECKS=1;";
+
+    // Execute disable FK, delete, and enable FK
+    if (mysqli_query($conn, $sql_disable_fk) && mysqli_query($conn, $sql_delete_room) && mysqli_query($conn, $sql_enable_fk)) {
         echo "<p class='text-center text-green-600'>Habitación eliminada correctamente.</p>";
     } else {
         echo "<p class='text-center text-red-600'>Error al eliminar la habitación: " . mysqli_error($conn) . "</p>";

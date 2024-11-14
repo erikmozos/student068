@@ -1,8 +1,16 @@
 <?php
-include ($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/.gitignore/database/remoteconnection.php');
-?>
+$servername = "localhost";
+$username = "root";
+$password = "";
+$database = "hotel"; // Base de datos
 
-<?php
+// Crear conexión
+$conn = new mysqli($servername, $username, $password, $database);
+
+// Verificar conexión
+if ($conn->connect_error) {
+    die("La conexión ha fallado: " . $conn->connect_error);
+}
 
 // Inicializar variables
 $reservation_number = "";
@@ -18,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $reservation_number = $_POST['reservation_number'];
 
         // Consulta para obtener la información de la reserva
-        $sql = "SELECT * FROM 068_reservations WHERE reservation_number = '$reservation_number'";
+        $sql = "SELECT * FROM reservations WHERE reservation_number = '$reservation_number'";
         $result = mysqli_query($conn, $sql);
 
         if (mysqli_num_rows($result) > 0) {
@@ -42,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $extras = $_POST['extras'];
 
         // Consulta para actualizar la información de la reserva
-        $update_sql = "UPDATE 068_reservations SET date_in='$date_in', date_out='$date_out', number_of_customers='$number_of_customers', reservation_price='$reservation_price', extras='$extras' WHERE reservation_number='$reservation_number'";
+        $update_sql = "UPDATE reservations SET date_in='$date_in', date_out='$date_out', number_of_customers='$number_of_customers', reservation_price='$reservation_price', extras='$extras' WHERE reservation_number='$reservation_number'";
 
         if (mysqli_query($conn, $update_sql)) {
             header("Location: resultado.php?status=success&message=Reserva actualizada correctamente.");

@@ -13,11 +13,11 @@
                 <form action="<?php echo '/student068/dwes/paginas/habitaciones_disponibles.php'; ?>" method="POST" class="max-w-lg mx-auto p-8 bg-white shadow-lg rounded-lg space-y-6">
                     <div>
                         <label for="check-in" class="block text-lg text-blue-800">Fecha de Entrada</label>
-                        <input type="date" id="check-in" name="check-in" required class="w-full p-3 border border-blue-400 rounded-lg focus:outline-none focus:border-yellow-500">
+                        <input type="date" id="check-in" name="check-in" required min=<?php $hoy=date("Y-m-d"); echo $hoy;?> class="w-full p-3 border border-blue-400 rounded-lg focus:outline-none focus:border-yellow-500">
                     </div>
                     <div>
                         <label for="check-out" class="block text-lg text-blue-800">Fecha de Salida</label>
-                        <input type="date" id="check-out" name="check-out" required class="w-full p-3 border border-blue-400 rounded-lg focus:outline-none focus:border-yellow-500">
+                        <input type="date" id="check-out" name="check-out" required min=<?php $hoy=date("Y-m-d"); echo $hoy;?> class="w-full p-3 border border-blue-400 rounded-lg focus:outline-none focus:border-yellow-500">
                     </div>
                     <div>
                         <label for="guests" class="block text-lg text-blue-800">Número de huéspedes</label>

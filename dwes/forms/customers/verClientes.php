@@ -8,7 +8,7 @@ if ($conn->connect_error) {
 }
 
 // Consulta para obtener todas los clientes
-$sql = "SELECT customer_name, customer_last_name, customer_dni, customer_address, phone_number, customer_birthdate FROM customers";
+$sql = "SELECT customer_name, customer_last_name, customer_dni, customer_address, phone_number, customer_birthdate FROM 068_customers";
 $result = mysqli_query($conn, $sql);
 
 // Incluir el encabezado de la página

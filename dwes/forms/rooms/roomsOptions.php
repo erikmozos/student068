@@ -14,7 +14,7 @@ include ($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/includes/header.php');
 <body>
 <section class="reserva my-16 px-6">
     <h2 class="text-4xl font-playfair font-semibold text-center mb-10 text-blue-900">Ver Habitación / Editar Habitación</h2>
-    <form action="<?php echo '/student068/dwes/forms/rooms/roomsbusquedapornumero.php'; ?>" method="POST" class="max-w-lg mx-auto p-8 bg-white shadow-lg rounded-lg space-y-6">
+    <form action="<?php echo '/student068/dwes/forms/rooms/selectRoomById.php'; ?>" method="POST" class="max-w-lg mx-auto p-8 bg-white shadow-lg rounded-lg space-y-6">
         <div>
             <label for="room_number" class="block text-lg text-blue-800">Número de Habitación</label>
             <input type="number" id="room_number" name="room_number" required class="w-full p-3 border border-blue-400 rounded-lg focus:outline-none focus:border-yellow-500">
@@ -24,7 +24,7 @@ include ($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/includes/header.php');
 </section>
 
 <section class="reserva my-16 px-6 space-y-6 max-w-lg mx-auto">
-    <form action="<?php echo '/student068/dwes/forms/rooms/roomsall.php'; ?>">
+    <form action="<?php echo '/student068/dwes/forms/rooms/selectRoomsAll.php'; ?>">
         <button type="submit" class="w-full bg-green-500 text-white p-3 rounded-lg hover:bg-green-600 transition-colors">Ver Todas las Habitaciones</button>
     </form>
 

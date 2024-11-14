@@ -1,33 +1,46 @@
 <?php
 include ($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/.gitignore/database/remoteconnection.php');
-?>
-
-<?php
 
 // Inicializar variables
-$room_number = $_POST['room_number'];
+$room_number = "";
 $room_price = "";
 $description = "";
 $room_state = "";
 
-// Obtener datos de la habitación
+// Detectar si el formulario fue enviado para buscar o actualizar
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $room_number = $_POST['room_number'];
+    if (isset($_POST['room_price'])) {
+        // Actualizar la información de la habitación
+        $room_number = $_POST['room_number'];
+        $room_price = $_POST['room_price'];
+        $description = $_POST['description'];
+        $room_state = $_POST['room_state'];
 
-    // Consulta para obtener la información de la habitación
-    $sql = "SELECT * FROM 068_rooms WHERE room_number = '$room_number'";
-    $result = mysqli_query($conn, $sql);
-
-    if (mysqli_num_rows($result) > 0) {
-        $row = mysqli_fetch_assoc($result);
-        $room_price = $row['room_price'];
-        $description = $row['description'];
-        $room_state = $row['room_state'];
+        // Consulta para actualizar la habitación
+        $update_sql = "UPDATE 068_rooms SET room_price = '$room_price', description = '$description', room_state = '$room_state' WHERE room_number = '$room_number'";
+        if (mysqli_query($conn, $update_sql)) {
+            echo "<p class='text-center text-green-600'>La habitación fue actualizada con éxito.</p>";
+        } else {
+            echo "<p class='text-center text-red-600'>Error al actualizar la habitación: " . mysqli_error($conn) . "</p>";
+        }
     } else {
-        echo "<p class='text-center text-red-600'>No se encontró la habitación con número $room_number.</p>";
+        // Obtener datos de la habitación para editar
+        $room_number = $_POST['room_number'];
+        
+        // Consulta para obtener la información de la habitación
+        $sql = "SELECT * FROM 068_rooms WHERE room_number = '$room_number'";
+        $result = mysqli_query($conn, $sql);
+
+        if (mysqli_num_rows($result) > 0) {
+            $row = mysqli_fetch_assoc($result);
+            $room_price = $row['room_price'];
+            $description = $row['description'];
+            $room_state = $row['room_state'];
+        } else {
+            echo "<p class='text-center text-red-600'>No se encontró la habitación con número $room_number.</p>";
+        }
     }
 }
-
 mysqli_close($conn);
 ?>
 

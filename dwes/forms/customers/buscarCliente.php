@@ -30,6 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $customer_birthdate = $row['customer_birthdate'];
         } else {
             echo "<p class='text-center text-red-600'>No se encontró el cliente con DNI $customer_dni.</p>";
+            header("Location: ../customerOptions.php");
         }
     }
 

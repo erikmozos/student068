@@ -43,6 +43,15 @@ include($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/includes/header.php');
     </div>
 </div>
 
+<!-- $rows = mysqli_fetch_all($result, MYSQLI_ASSOC); 
+
+foreach($rows as $row){
+    echo $row['customer_name'] . " " . $row['customer_last_name'] . "<br>";
+    echo $row['customer_dni'] . "<br>";
+    echo $row['customer_address'] . "<br>";
+    echo $row['phone_number'] . "<br>";
+} -->
+
 <?php
 // Cerrar la conexión
 mysqli_close($conn);

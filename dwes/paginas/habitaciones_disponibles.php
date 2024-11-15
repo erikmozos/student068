@@ -10,8 +10,7 @@ if($check_in < date("Y-m-d") || $check_out < date("Y-m-d") || $check_out < $chec
     exit();
 }
 
-
-$sql = "SELECT DISTINCT type_name, price_per_night, description, capacity
+$sql = "SELECT DISTINCT type_name, price_per_night, description, capacity, room_id
         FROM 068_room_type_view
         WHERE room_id NOT IN (
             SELECT room_id
@@ -40,7 +39,7 @@ include ($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/includes/header.php');
                         <p class='text-lg text-gray-700 mb-2'><strong>Precio:</strong> $" . $row['price_per_night'] . "</p>
                         <p class='text-gray-600 mb-4'><strong>Descripción:</strong> " . $row['description'] . "</p>
                         <button class='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>
-                            <a href='detalles.php?tipo=" . urlencode($row['type_name']) . "'>Más info</a>
+                            <a href='detalles.php?room_id=" . urlencode($row['room_id']) . "'>Más info</a>
                         </button>
                     </div>
                 ";
@@ -52,5 +51,13 @@ include ($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/includes/header.php');
             </div>";
         }
         ?>
+
+    <form action="detalles.php" method="post">
+                    <input type="hidden" name="room_id" value="<?php echo $room_details['room_id']; ?>">
+                    <input type="hidden" name="check-in" value="<?php echo $check_in; ?>">
+                    <input type="hidden" name="check-out" value="<?php echo $check_out; ?>">
+                    <input type="hidden" name="guests" value="<?php echo $personas; ?>">
+
+    </form>
     </div>
 </div>

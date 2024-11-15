@@ -59,6 +59,7 @@
             }
         }
     }
+    
 
     // Llamar a la función para manejar el inicio de sesión
     Iniciarlogin($conn);
@@ -92,7 +93,7 @@
                     <?php echo $error_message; ?>
                 </div>
             <?php endif; ?>
-            <p>¿No tienes cuenta? <a href="./register.php" class="font-bold	focus:border-blue-400"> ¡Registrate ahora!</a></p>
+            <p>¿No tienes cuenta? <a href="./register.php" class="font-bold text-blue-800 hover:text-blue-900"> ¡Registrate Aquí!</a></p>
         </div>
     </div>
 

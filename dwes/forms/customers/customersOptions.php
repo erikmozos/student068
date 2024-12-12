@@ -1,5 +1,11 @@
 <?php
 include ($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/includes/header.php');
+if ($_SESSION['userrole'] !== "admin" && $_SESSION['userrole'] !== "employee") {
+    // Si no ha iniciado sesión, redirigir a la página de inicio de sesión
+    header("Location: /student068/dwes/index.php");
+    exit();
+}
+
 ?>
 
 <!DOCTYPE html>

@@ -1,5 +1,12 @@
 <?php
 include ($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/includes/header.php');
+
+if ($_SESSION['userrole'] !== "admin" && $_SESSION['userrole'] !== "employee") {
+    // Si no ha iniciado sesión, redirigir a la página de inicio de sesión
+    header("Location: /student068/dwes/index.php");
+
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -34,11 +41,16 @@ include ($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/includes/header.php');
     <form action="<?php echo '/student068/dwes/forms/reservations/eliminarReservation.php'; ?>">
     <button type="submit" class="w-full bg-gray-600 text-white p-3 rounded-lg hover:bg-gray-700 transition-colors">Eliminar Reserva</button>
     </form>
+
+    <form action="<?php echo '/student068/dwes/forms/reservations/check.php'; ?>">
+        <button type="submit" class="w-full bg-gray-600 text-white p-3 rounded-lg hover:bg-gray-700 transition-colors">Reservas hoy</button>
+    </form>
 </section>
 
 </body>
 </html>
 
 <?php
+
 include ($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/includes/footer.php');
 ?>

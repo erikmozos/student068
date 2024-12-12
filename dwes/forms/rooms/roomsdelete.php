@@ -1,8 +1,13 @@
 <?php
 include ($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/.gitignore/database/remoteconnection.php');
-?>
+include($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/includes/header.php');
 
-<?php
+
+if ($_SESSION['userrole'] !== "admin") {
+    // Si no ha iniciado sesión, redirigir a la página de inicio de sesión
+    header("Location: /student068/dwes/index.php");
+    exit();
+}
 
 // Eliminar habitación
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_room'])) {
@@ -32,7 +37,6 @@ if (isset($_GET['search'])) {
 $result = mysqli_query($conn, $sql);
 
 // Incluir el encabezado de la página
-include ($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/includes/header.php');
 ?>
 
 <!-- Contenedor principal -->

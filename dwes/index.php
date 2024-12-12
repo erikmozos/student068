@@ -1,5 +1,9 @@
 
 <?php
+
+    include ($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/functions/functions.php');
+// Llamar a la función para destruir todas las cookies
+destroy_all_cookies();  
     include ($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/includes/header.php');
     include ($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/includes/maininicio.php');
     include ($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/includes/footer.php');

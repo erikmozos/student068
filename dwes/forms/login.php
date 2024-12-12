@@ -10,7 +10,7 @@
         global $username, $password, $error_message, $userrole;
 
         // Verificar si el formulario fue enviado
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($username) && isset($password)) {
             $username = mysqli_real_escape_string($conn, $_POST['username']);
             $password = mysqli_real_escape_string($conn, $_POST['password']);
             
@@ -19,15 +19,22 @@
             $result = mysqli_query($conn, $sql);
 
             // Si el usuario no se encuentra en 068_users, buscamos en 068_employee
-            if (mysqli_num_rows($result) > 0) {
+            if (mysqli_num_rows($result) > 0) {      
                 $row = mysqli_fetch_assoc($result);
                 // Verificamos la contraseña en texto claro
                 if ($password === $row['password']) {
                     session_start();
+                    $customerdni = $row['customer_dni'];
                     $_SESSION['username'] = $username;
                     $_SESSION['userrole'] = "customer";
+                    $_SESSION['id'] = $row['customer_id'];
+                    $_SESSION['dni'] = $customerdni;
+                    if(isset($_COOKIE['check_in'])){
+                        header("Location: ../paginas/detalles.php");
+                    }else{
                     header("Location: ../index.php"); 
                     exit();
+                    }
                 } else {
                     $error_message = "Contraseña incorrecta.";
                 }

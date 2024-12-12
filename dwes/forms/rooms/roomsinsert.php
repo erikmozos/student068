@@ -1,8 +1,13 @@
 <?php
 include ($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/.gitignore/database/remoteconnection.php');
-?>
+include($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/includes/header.php');
 
-<?php
+if ($_SESSION['userrole'] !== "admin" && $_SESSION['userrole'] !== "employee") {
+    // Si no ha iniciado sesión, redirigir a la página de inicio de sesión
+    header("Location: /student068/dwes/index.php");
+    exit();
+}
+
 
 // Insertar nueva habitación
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['insert_room'])) {
@@ -39,10 +44,6 @@ $type_sql = "SELECT room_type_id, type_name FROM 068_room_types";
 $type_result = mysqli_query($conn, $type_sql);
 ?>
 
-<?php
-// Incluir el header
-include ($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/includes/header.php');
-?>
 
 <!DOCTYPE html>
 <html lang="es">

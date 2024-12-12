@@ -1,8 +1,14 @@
 <?php
 include ($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/.gitignore/database/remoteconnection.php');
-?>
+include($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/includes/header.php');
 
-<?php
+
+if ($_SESSION['userrole'] !== "admin" && $_SESSION['userrole'] !== "employee") {
+    // Si no ha iniciado sesión, redirigir a la página de inicio de sesión
+    header("Location: /student068/dwes/index.php");
+    exit();
+}
+
 
 // Inicializar variables
 $reservation_number = "";
@@ -27,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $date_out = $row['date_out'];
             $number_of_customers = $row['number_of_customers'];
             $reservation_price = $row['reservation_price'];
-            $extras = $row['extras'];
+            $extras = $row['extras_json'];
         } else {
             echo "<p class='text-center text-red-600'>No se encontró la reserva con número $reservation_number.</p>";
         }
@@ -42,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $extras = $_POST['extras'];
 
         // Consulta para actualizar la información de la reserva
-        $update_sql = "UPDATE 068_reservations SET date_in='$date_in', date_out='$date_out', number_of_customers='$number_of_customers', reservation_price='$reservation_price', extras='$extras' WHERE reservation_number='$reservation_number'";
+        $update_sql = "UPDATE 068_reservations SET date_in='$date_in', date_out='$date_out', number_of_customers='$number_of_customers', reservation_price='$reservation_price', extras_json='$extras' WHERE reservation_number='$reservation_number'";
 
         if (mysqli_query($conn, $update_sql)) {
             header("Location: resultado.php?status=success&message=Reserva actualizada correctamente.");
@@ -57,9 +63,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 mysqli_close($conn);
 ?>
 
-<?php
-include ($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/includes/header.php');
-?>
 
 <!DOCTYPE html>
 <html lang="es">

@@ -5,6 +5,13 @@ $check_in = $_POST['check-in'];
 $check_out = $_POST['check-out'];
 $personas = (int)$_POST['guests'];
 
+
+    
+
+    setcookie('check_in', $check_in, time() + 300, '/'); // Expira en 5 minutos
+    setcookie('check_out', $check_out, time() + 300, '/'); // Expira en 5 minutos
+    setcookie('personas', $personas, time() + 300, '/');
+
 if($check_in < date("Y-m-d") || $check_out < date("Y-m-d") || $check_out < $check_in) {
     header("Location: /student068/dwes/index.php");
     exit();

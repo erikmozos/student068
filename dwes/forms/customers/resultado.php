@@ -10,6 +10,7 @@
 <section class="my-16 px-6">
     <div class="max-w-lg mx-auto p-8 bg-white shadow-lg rounded-lg text-center">
         <?php
+        
         if (isset($_GET['status']) && isset($_GET['message'])) {
             $status = htmlspecialchars($_GET['status']);
             $message = htmlspecialchars($_GET['message']);

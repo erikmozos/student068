@@ -1,8 +1,14 @@
 <?php
 include ($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/.gitignore/database/remoteconnection.php');
-?>
+include ($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/includes/header.php');
 
-<?php
+
+if ($_SESSION['userrole'] !== "admin" && $_SESSION['userrole'] !== "employee") {
+    // Si no ha iniciado sesión, redirigir a la página de inicio de sesión
+    header("Location: /student068/dwes/index.php");
+    exit();
+}
+
 
 // Insertar nueva reserva
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['insert_reservation'])) {
@@ -11,7 +17,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['insert_reservation']))
     $date_out = $_POST['date_out'];
     $number_of_customers = $_POST['number_of_customers'];
     $reservation_price = $_POST['reservation_price'];
-    $extras = isset($_POST['extras']) && !empty(trim($_POST['extras'])) ? trim($_POST['extras']) : '{}';
+    // $extras = isset($_POST['extras']) && !empty(trim($_POST['extras'])) ? trim($_POST['extras']) : '{}';
+    $extras = "";
     $customer_id = $_POST['customer_id'];
     $room_id = $_POST['room_id']; // Obtener el room_id del formulario
 
@@ -25,8 +32,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['insert_reservation']))
 
     if (mysqli_num_rows($customer_check_result) > 0 && mysqli_num_rows($room_check_result) > 0) {
         // Si el cliente y la habitación existen, realiza la inserción
-        $sql = "INSERT INTO 068_reservations (reservation_number, date_in, date_out, number_of_customers, reservation_price, extras, customer_id, room_id) 
-                VALUES ('$reservation_number', '$date_in', '$date_out', '$number_of_customers', '$reservation_price', '$extras', '$customer_id', '$room_id')";
+        $sql = "INSERT INTO 068_reservations (reservation_number, date_in, date_out, number_of_customers, reservation_price,  customer_id, room_id, status) 
+                VALUES ('$reservation_number', '$date_in', '$date_out', '$number_of_customers', '$reservation_price', '$customer_id', '$room_id', 'reserved')";
 
         if (mysqli_query($conn, $sql)) {
             echo "<p class='text-center text-green-600'>Nueva reserva insertada correctamente.</p>";
@@ -42,9 +49,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['insert_reservation']))
 
 ?>
 
-<?php
-include ($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/includes/header.php');
-?>
 
 <!DOCTYPE html>
 <html lang="es">
@@ -87,10 +91,10 @@ include ($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/includes/header.php');
             <label for="reservation_price" class="block text-lg text-blue-800">Precio de la Reserva</label>
             <input type="number" id="reservation_price" name="reservation_price" required class="w-full p-3 border border-blue-400 rounded-lg focus:outline-none focus:border-yellow-500">
         </div>
-        <div>
+        <!-- <div>
             <label for="extras" class="block text-lg text-blue-800">Extras</label>
             <textarea id="extras" name="extras" class="w-full p-3 border border-blue-400 rounded-lg focus:outline-none focus:border-yellow-500"></textarea>
-        </div>
+        </div> -->
         <button type="submit" name="insert_reservation" class="w-full bg-yellow-500 text-white p-3 rounded-lg hover:bg-yellow-600 transition-colors">Insertar Reserva</button>
     </form>
 </section>

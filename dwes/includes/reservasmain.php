@@ -1,3 +1,17 @@
+<?php 
+//             include ($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/forms/customers_reservation/customer_reservation.php');
+
+
+if (isset($_COOKIE['reservation_number']) && isset($_COOKIE['last_name']) && 
+        !empty($_COOKIE['reservation_number']) && !empty($_COOKIE['last_name'])) {
+            
+            $reservation_number = $_COOKIE['reservation_number'];
+            $last_name = $_COOKIE['last_name'];
+
+            include ($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/forms/customers_reservation/customer_reservation_cookie.php');
+    }else{
+?>
+
 <div class="container mx-auto py-12">
     <h1 class="text-4xl font-bold text-center text-gray-800 mb-8">Consultar Reserva</h1>
 
@@ -21,6 +35,10 @@
         <!-- Botón de Enviar -->
         <button type="submit" class="w-full bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-500">
             Consultar Reserva
-        </button> =>
+        </button>
     </form>
 </div>
+
+<?php
+    }
+    ?>

@@ -3,10 +3,13 @@
 include ($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/includes/header.php'); // Incluye el encabezado
 
 // Verificar si el usuario ha iniciado sesión
-if (!isset($_SESSION['username'])) {
+if ($_SESSION['userrole'] !== "admin") {
     // Si no ha iniciado sesión, redirigir a la página de inicio de sesión
-    header("Location: /student068/dwes/forms/login.php");
+    header("Location: /student068/dwes/index.php");
     exit();
+}else{
+    // Si ha iniciado sesión, mostrar el contenido de la página
+    echo "<h1 class='text-center text-4xl font-playfair font-semibold text-blue-900 my-16'>Panel de Administración</h1>";
 }
 ?>
 

@@ -22,7 +22,7 @@
             echo "<p class='mt-4'>$message</p>";
         }
         ?>
-        <a href="reservations.php" class="mt-6 inline-block bg-yellow-500 text-white p-3 rounded-lg hover:bg-yellow-600 transition-colors">Volver al Menú de Gestión de Reservas</a>
+        <a href="reservationsOptions.php" class="mt-6 inline-block bg-yellow-500 text-white p-3 rounded-lg hover:bg-yellow-600 transition-colors">Volver al Menú de Gestión de Reservas</a>
     </div>
 </section>
 </body>

@@ -2,16 +2,12 @@
 include ($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/.gitignore/database/remoteconnection.php');
 include ($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/includes/header.php');
 
-?>
-
-<?php
-if ($_SESSION['userrole'] !== "admin" && $_SESSION['userrole'] !== "employee") {
+if (!$_SESSION['username']) {
     // Si no ha iniciado sesión, redirigir a la página de inicio de sesión
     header("Location: /student068/dwes/index.php");
     exit();
 }
 
-// Inicializar variables
 $customer_name = "";
 $customer_last_name = "";
 $customer_dni = "";
@@ -20,12 +16,10 @@ $phone_number = "";
 $customer_birthdate = "";
 
 // Obtener datos del cliente
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if (isset($_POST['customer_dni'])) {
-        $customer_dni = $_POST['customer_dni'];
+
 
         // Consulta para obtener la información del cliente
-        $sql = "SELECT * FROM 068_customers WHERE customer_dni = '$customer_dni'";
+        $sql = "SELECT * FROM `068_customers` WHERE customer_dni = '" . $_SESSION['dni'] . "'";
         $result = mysqli_query($conn, $sql);
 
         if (mysqli_num_rows($result) > 0) {
@@ -35,11 +29,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $customer_address = $row['customer_address'];
             $phone_number = $row['phone_number'];
             $customer_birthdate = $row['customer_birthdate'];
+            $customer_dni = $row['customer_dni'];
         } else {
             echo "<p class='text-center text-red-600'>No se encontró el cliente con DNI $customer_dni.</p>";
-            header("Location: ../customerOptions.php");
+            // header("Location: ../customerOptions.php");
         }
-    }
+    
 
     // Actualizar los datos del cliente si se ha enviado un formulario de actualización
     if (isset($_POST['update'])) {
@@ -67,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             exit();
         }
     }
-}
+
 
 mysqli_close($conn);
 ?>
@@ -88,7 +83,7 @@ mysqli_close($conn);
         <input type="hidden" name="customer_dni" value="<?php echo htmlspecialchars($customer_dni); ?>">
         
         <div>
-            <label for="customer_dni" class="block text-lg text-blue-800">ID del Cliente</label>
+            <label for="customer_dni" class="block text-lg text-blue-800">DNI</label>
             <input type="text" id="customer_dni" name="customer_dni" value="<?php echo htmlspecialchars($customer_dni); ?>" required class="w-full p-3 border border-blue-400 rounded-lg focus:outline-none focus:border-yellow-500" readonly>
         </div>
         
@@ -117,6 +112,11 @@ mysqli_close($conn);
             <input type="date" id="customer_birthdate" name="customer_birthdate" value="<?php echo htmlspecialchars($customer_birthdate); ?>" required class="w-full p-3 border border-blue-400 rounded-lg focus:outline-none focus:border-yellow-500">
         </div>
         
+        <div>
+            <label for="customer_image_profile" class="block text-lg text-blue-800">Foto de perfil</label>
+            <input type="file" id="customer_image_profile" name="customer_image_profile" value="<?php echo htmlspecialchars($customer_image_profile); ?>" required class="w-full p-3 border border-blue-400 rounded-lg focus:outline-none focus:border-yellow-500">
+        </div>
+
         <button type="submit" name="update" class="w-full bg-yellow-500 text-white p-3 rounded-lg hover:bg-yellow-600 transition-colors">Actualizar Cliente</button>
     </form>
 </section>

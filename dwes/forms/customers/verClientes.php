@@ -1,7 +1,14 @@
 <?php
 include ($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/.gitignore/database/remoteconnection.php');
-?>
-<?php
+include($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/includes/header.php');
+
+
+if ($_SESSION['userrole'] !== "admin" && $_SESSION['userrole'] !== "employee") {
+    // Si no ha iniciado sesión, redirigir a la página de inicio de sesión
+    header("Location: /student068/dwes/index.php");
+    exit();
+}
+
 // Verificar conexión
 if ($conn->connect_error) {
     die("La conexión ha fallado: " . $conn->connect_error);
@@ -12,7 +19,6 @@ $sql = "SELECT customer_name, customer_last_name, customer_dni, customer_address
 $result = mysqli_query($conn, $sql);
 
 // Incluir el encabezado de la página
-include($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/includes/header.php');
 ?>
 
 <!-- Contenedor principal centrado -->

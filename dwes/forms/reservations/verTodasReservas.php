@@ -1,15 +1,19 @@
 <?php
 include ($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/.gitignore/database/remoteconnection.php');
-?>
+include($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/includes/header.php');
 
-<?php
+
+if ($_SESSION['userrole'] !== "admin" && $_SESSION['userrole'] !== "employee") {
+    // Si no ha iniciado sesión, redirigir a la página de inicio de sesión
+    header("Location: /student068/dwes/index.php");
+    exit();
+}
 
 // Consulta para obtener todas las reservas
-$sql = "SELECT reservation_number, date_in, date_out, number_of_customers, reservation_price, extras FROM 068_reservations";
+$sql = "SELECT reservation_number, date_in, date_out, number_of_customers, reservation_price, extras_json FROM 068_reservations";
 $result = mysqli_query($conn, $sql);
 
 // Incluir el encabezado de la página
-include($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/includes/header.php');
 ?>
 
 <!-- Contenedor principal centrado -->
@@ -20,7 +24,7 @@ include($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/includes/header.php');
 
         <?php
         // Mostrar resultados si hay reservas en la base de datos
-        if (mysqli_num_rows($result) > 0) {
+        if(mysqli_num_rows($result) > 0) {  
             while ($row = mysqli_fetch_assoc($result)) {
                 echo "
                 <div class='bg-white p-6 rounded-lg shadow-lg text-center'>
@@ -29,7 +33,7 @@ include($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/includes/header.php');
                     <p class='text-lg text-gray-700 mb-2'><strong>Fecha de Salida:</strong> " . htmlspecialchars($row['date_out']) . "</p>
                     <p class='text-lg text-gray-700 mb-2'><strong>Número de Clientes:</strong> " . htmlspecialchars($row['number_of_customers']) . "</p>
                     <p class='text-lg text-gray-700 mb-4'><strong>Precio de la Reserva:</strong> $" . htmlspecialchars($row['reservation_price']) . "</p>
-                    <p class='text-gray-600 mb-4'><strong>Extras:</strong> " . htmlspecialchars($row['extras']) . "</p>
+                    <p class='text-gray-600 mb-4'><strong>Extras:</strong> " . htmlspecialchars($row['extras_json']) . "</p>
                 </div>
                 ";
             }

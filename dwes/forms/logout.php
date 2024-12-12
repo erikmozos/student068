@@ -1,9 +1,12 @@
 <?php
-session_start(); // Inicia la sesión
-session_unset(); // Libera todas las variables de sesión
-session_destroy(); // Destruye la sesión
 
-// Redirige al usuario a la página de inicio
-header("Location: /student068/dwes/index.php"); // Cambia esto si necesitas redirigir a otra página
-exit();
+include ($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/functions/functions.php');
+
+session_start();
+session_unset(); 
+session_destroy(); 
+
+destroy_all_cookies();
+
+header("Location: /student068/dwes/index.php"); 
 ?>

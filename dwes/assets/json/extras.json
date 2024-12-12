@@ -1,0 +1,50 @@
+{
+  "services": [
+      {
+          "restaurant": [
+              {
+                  "ticketNumber": 3456,
+                  "date": "24/11/2024 20:48",
+                  "products": [
+                      {
+                          "productName": "Lasagna",
+                          "quantity": 3,
+                          "unitPrice": 12.5
+                      },
+                      {
+                          "productName": "Caesar Salad",
+                          "quantity": 2,
+                          "unitPrice": 7.5
+                      }
+                  ]
+              },
+              {
+                  "ticketNumber": 3457,
+                  "date": "25/11/2024 9:17",
+                  "products": [
+                      {
+                          "productName": "Continental Breakfast",
+                          "quantity": 2,
+                          "unitPrice": 15.0
+                      }
+                  ]
+              }
+          ]
+      },
+      {
+          "wellnessCenter": [
+              {
+                  "ticketNumber": 3458,
+                  "date": "24/11/2024 10:15",
+                  "products": [
+                      {
+                          "productName": "Aromatherapy Session",
+                          "quantity": 1,
+                          "unitPrice": 45.0
+                      }
+                  ]
+              }
+          ]
+      }
+  ]
+}

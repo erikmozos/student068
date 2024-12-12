@@ -1,28 +1,15 @@
 <?php
 include ($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/.gitignore/database/remoteconnection.php');
 
-include ($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/includes/header.php');
-
 $message = "";
-
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && empty($_COOKIE['reservation_number']) && empty($_COOKIE['last_name'])) {
-    // Guardar los datos del formulario en cookies
-    $reservation_number = $_POST['reservation_number'];
-    $last_name = $_POST['last_name'];
-    
-    setcookie('reservation_number', $reservation_number, time() + 300, '/'); // Expira en 5 minutos
-    setcookie('last_name', $last_name, time() + 300, '/'); // Expira en 5 minutos
-
-}
 
 
 
 
 // Verificar si se enviaron datos del formulario de selección de extras
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['extras'])) {
+if (!empty($_COOKIE['reservation_number']) && !empty($_COOKIE['last_name'])) {
 
-    $reservation_number = $_POST['reservation_number'];
+    $reservation_number = $_COOKIE['reservation_number'];
     $selected_extras = $_POST['extras'] ?? []; // Obtener los extras seleccionados
     $current_date = date('Y-m-d H:i:s'); // Fecha actual para los extras
 
@@ -95,6 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['extras'])) {
 
     // Convertir a JSON
     $updated_extras_json = json_encode($current_extras, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+    
 
     // Actualizar la columna extras_json en la tabla reservations
     $update_sql = "UPDATE 068_reservations SET extras_json = '$updated_extras_json' WHERE reservation_number = '$reservation_number'";
@@ -106,8 +94,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['extras'])) {
 }
 
 // Recibir los datos del formulario inicial
-$reservation_number = $_POST['reservation_number'] ?? '';
-$last_name = $_POST['last_name'] ?? '';
+$reservation_number = $_COOKIE['reservation_number'] ?? '';
+$last_name = $_COOKIE['last_name'] ?? '';
 
 // Consulta SQL para obtener la información de la reserva
 $sql = "SELECT reservations.reservation_number, reservations.date_in, reservations.date_out, 
@@ -125,7 +113,7 @@ $result = mysqli_query($conn, $sql);
 <div class="container mx-auto py-12">
     <h1 class="text-4xl font-bold text-center text-gray-800 mb-8">Información de la Reserva</h1>
 
-    <?php echo $message; // Mostrar mensaje si existe ?>
+    <?php  // Mostrar mensaje si existe ?>
 
     <?php if (mysqli_num_rows($result) > 0): ?>
         <?php $reservation = mysqli_fetch_assoc($result); ?>
@@ -174,7 +162,6 @@ $result = mysqli_query($conn, $sql);
         <form method="POST" class="max-w-lg mx-auto bg-white p-8 rounded-lg shadow-md mt-8">
             <h2 class="text-2xl font-bold text-gray-800 mb-4">Seleccionar Extras</h2>
             <input type="hidden" name="reservation_number" value="<?php echo $reservation['reservation_number']; ?>">
-            <input type="hidden" name="last_name" value="<?php echo $reservation['customer_last_name']; ?>">
 
             <div class="grid grid-cols-2 gap-4">
                 <!-- Card 1 -->
@@ -224,5 +211,8 @@ $result = mysqli_query($conn, $sql);
 
             <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 mt-4 w-full">Guardar Extras</button>
         </form>
-    <?php endif; ?>
+        
+        <button></button>
+        
+        <?php endif; ?>
 </div>

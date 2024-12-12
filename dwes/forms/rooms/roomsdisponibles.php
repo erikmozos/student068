@@ -1,15 +1,18 @@
 <?php
 include ($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/.gitignore/database/remoteconnection.php');
-?>
+include($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/includes/header.php');
 
-<?php
+if ($_SESSION['userrole'] !== "admin" && $_SESSION['userrole'] !== "employee") {
+    // Si no ha iniciado sesión, redirigir a la página de inicio de sesión
+    header("Location: /student068/dwes/index.php");
+    exit();
+}
 
 // Consulta para obtener habitaciones disponibles
 $sql = "SELECT room_number, room_price, description, room_state FROM 068_rooms WHERE room_state = 'disponible'";
 $result = mysqli_query($conn, $sql);
 
 // Incluir el encabezado de la página
-include($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/includes/header.php');
 ?>
 
 <!-- Contenedor principal centrado -->

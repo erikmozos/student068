@@ -1,8 +1,16 @@
 <?php
 include ($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/.gitignore/database/remoteconnection.php');
-?>
+include($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/includes/header.php');
 
-<?php
+
+if ($_SESSION['userrole'] !== "admin" && $_SESSION['userrole'] !== "employee") {
+    // Si no ha iniciado sesión, redirigir a la página de inicio de sesión
+    header("Location: /student068/dwes/index.php");
+    exit();
+}else{
+    // Si ha iniciado sesión, mostrar el contenido de la página
+
+
 
 // Eliminar reserva
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_reservation'])) {
@@ -29,7 +37,6 @@ if (isset($_GET['search'])) {
 $result = mysqli_query($conn, $sql);
 
 // Incluir el encabezado de la página
-include($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/includes/header.php');
 ?>
 
 <!-- Contenedor principal centrado -->
@@ -74,5 +81,6 @@ include($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/includes/header.php');
 
 <?php
 mysqli_close($conn);
+}
 include($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/includes/footer.php');
 ?>

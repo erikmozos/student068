@@ -1,27 +1,11 @@
 <?php
 include ($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/.gitignore/database/remoteconnection.php');
-
 include ($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/includes/header.php');
 
 $message = "";
 
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && empty($_COOKIE['reservation_number']) && empty($_COOKIE['last_name'])) {
-    // Guardar los datos del formulario en cookies
-    $reservation_number = $_POST['reservation_number'];
-    $last_name = $_POST['last_name'];
-    
-    setcookie('reservation_number', $reservation_number, time() + 300, '/'); // Expira en 5 minutos
-    setcookie('last_name', $last_name, time() + 300, '/'); // Expira en 5 minutos
-
-}
-
-
-
-
 // Verificar si se enviaron datos del formulario de selección de extras
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['extras'])) {
-
     $reservation_number = $_POST['reservation_number'];
     $selected_extras = $_POST['extras'] ?? []; // Obtener los extras seleccionados
     $current_date = date('Y-m-d H:i:s'); // Fecha actual para los extras
@@ -41,52 +25,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['extras'])) {
     }
 
     // Organizar los nuevos extras en las categorías correspondientes
-    foreach ($selected_extras as $extra) {
-        if ($extra === 'Late Check-out') {
+    foreach ($selected_extras as $extra_name => $quantity) {
+        if ($quantity > 0) { // Solo agregar si la cantidad es mayor que 0
             $current_extras["services"][1]["wellnessCenter"][] = [
                 "ticketNumber" => rand(1000, 9999),
                 "date" => $current_date,
                 "products" => [
                     [
-                        "productName" => "Late Check-out",
-                        "quantity" => 1,
-                        "unitPrice" => 20.0
-                    ]
-                ]
-            ];
-        } elseif ($extra === 'Desayuno') {
-            $current_extras["services"][0]["restaurant"][] = [
-                "ticketNumber" => rand(1000, 9999),
-                "date" => $current_date,
-                "products" => [
-                    [
-                        "productName" => "Desayuno",
-                        "quantity" => 1,
-                        "unitPrice" => 15.0
-                    ]
-                ]
-            ];
-        } elseif ($extra === 'Acceso al Spa') {
-            $current_extras["services"][1]["wellnessCenter"][] = [
-                "ticketNumber" => rand(1000, 9999),
-                "date" => $current_date,
-                "products" => [
-                    [
-                        "productName" => "Acceso al Spa",
-                        "quantity" => 1,
-                        "unitPrice" => 45.0
-                    ]
-                ]
-            ];
-        } elseif ($extra === 'Transporte al Aeropuerto') {
-            $current_extras["services"][1]["wellnessCenter"][] = [
-                "ticketNumber" => rand(1000, 9999),
-                "date" => $current_date,
-                "products" => [
-                    [
-                        "productName" => "Transporte al Aeropuerto",
-                        "quantity" => 1,
-                        "unitPrice" => 30.0
+                        "productName" => $extra_name,
+                        "quantity" => $quantity,
+                        "unitPrice" => $_POST['unit_price'][$extra_name] // Usar el precio de la base de datos
                     ]
                 ]
             ];
@@ -105,6 +53,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['extras'])) {
     }
 }
 
+// Consulta para obtener los extras disponibles de la base de datos
+$sql_extras = "SELECT service_category, product_name, unit_price FROM 068_reservation_extras";
+$extras_result = mysqli_query($conn, $sql_extras);
+
 // Recibir los datos del formulario inicial
 $reservation_number = $_POST['reservation_number'] ?? '';
 $last_name = $_POST['last_name'] ?? '';
@@ -118,8 +70,6 @@ $sql = "SELECT reservations.reservation_number, reservations.date_in, reservatio
         WHERE reservations.reservation_number = '$reservation_number' AND customers.customer_last_name = '$last_name'";
 
 $result = mysqli_query($conn, $sql);
-
-// include ($_SERVER['DOCUMENT_ROOT'].'/student068/dwes/includes/header.php'); 
 ?>
 
 <div class="container mx-auto py-12">
@@ -177,49 +127,18 @@ $result = mysqli_query($conn, $sql);
             <input type="hidden" name="last_name" value="<?php echo $reservation['customer_last_name']; ?>">
 
             <div class="grid grid-cols-2 gap-4">
-                <!-- Card 1 -->
-                <div class="border rounded-lg p-4 bg-gray-100">
-                    <h3 class="font-bold text-lg">Late Check-out</h3>
-                    <p class="text-sm text-gray-600">Permite quedarte hasta las 14:00.</p>
-                    <p class="text-blue-500 font-semibold">Precio: $20</p>
-                    <label class="flex items-center space-x-2 mt-2">
-                        <input type="checkbox" name="extras[]" value="Late Check-out">
-                        <span>Seleccionar</span>
-                    </label>
-                </div>
-
-                <!-- Card 2 -->
-                <div class="border rounded-lg p-4 bg-gray-100">
-                    <h3 class="font-bold text-lg">Desayuno</h3>
-                    <p class="text-sm text-gray-600">Desayuno buffet disponible de 7:00 a 10:00.</p>
-                    <p class="text-blue-500 font-semibold">Precio: $15</p>
-                    <label class="flex items-center space-x-2 mt-2">
-                        <input type="checkbox" name="extras[]" value="Desayuno">
-                        <span>Seleccionar</span>
-                    </label>
-                </div>
-
-                <!-- Card 3 -->
-                <div class="border rounded-lg p-4 bg-gray-100">
-                    <h3 class="font-bold text-lg">Acceso al Spa</h3>
-                    <p class="text-sm text-gray-600">Disfruta de sauna y piscina climatizada.</p>
-                    <p class="text-blue-500 font-semibold">Precio: $45</p>
-                    <label class="flex items-center space-x-2 mt-2">
-                        <input type="checkbox" name="extras[]" value="Acceso al Spa">
-                        <span>Seleccionar</span>
-                    </label>
-                </div>
-
-                <!-- Card 4 -->
-                <div class="border rounded-lg p-4 bg-gray-100">
-                    <h3 class="font-bold text-lg">Transporte al Aeropuerto</h3>
-                    <p class="text-sm text-gray-600">Servicio de traslado ida o vuelta.</p>
-                    <p class="text-blue-500 font-semibold">Precio: $30</p>
-                    <label class="flex items-center space-x-2 mt-2">
-                        <input type="checkbox" name="extras[]" value="Transporte al Aeropuerto">
-                        <span>Seleccionar</span>
-                    </label>
-                </div>
+                <?php while ($extra = mysqli_fetch_assoc($extras_result)): ?>
+                    <div class="border rounded-lg p-4 bg-gray-100">
+                        <h3 class="font-bold text-lg"><?php echo htmlspecialchars($extra['product_name']); ?></h3>
+                        <p class="text-sm text-gray-600">Categoría: <?php echo htmlspecialchars($extra['service_category']); ?></p>
+                        <p class="text-blue-500 font-semibold">Precio: $<?php echo number_format($extra['unit_price'], 2); ?></p>
+                        <label class="flex items-center space-x-2 mt-2">
+                            <input type="number" name="extras[<?php echo htmlspecialchars($extra['product_name']); ?>]" value="0" min="0" step="1" class="w-16 p-2 border rounded" />
+                            <span>Cantidad</span>
+                        </label>
+                        <input type="hidden" name="unit_price[<?php echo htmlspecialchars($extra['product_name']); ?>]" value="<?php echo $extra['unit_price']; ?>" />
+                    </div>
+                <?php endwhile; ?>
             </div>
 
             <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 mt-4 w-full">Guardar Extras</button>
